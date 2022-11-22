@@ -9,43 +9,36 @@ class WeatherViewModel extends ReactiveViewModel {
 
   final WeatherService weatherService;
 
-  late final Weather weather;
-  late final List<Weather> hourlyWeather;
+  Weather? weather;
+  List<Weather>? hourlyWeather;
 
-  String query = 'Moscow';
+  String query = '';
+  String city = 'Moscow';
   String lat = '';
   String lon = '';
 
   Future<void> init() async {
     setBusy(true);
-    weather = await weatherService.fetchCurrentWeather(
-      query: query,
-      lat: lat,
-      lon: lon,
-    );
-    hourlyWeather = await weatherService.fetchHourlyWeather(
-      query: query,
-      lat: lat,
-      lon: lon,
-    );
+    await setLatLon();
     setBusy(false);
     notifyListeners();
   }
 
-  Future<void> onEntrySity(String city) async {
+  Future<void> onEntrySity(String newCity) async {
     setBusy(true);
-    query = city;
-    weather = await weatherService.fetchCurrentWeather(
-      query: query,
-      lat: lat,
-      lon: lon,
-    );
-    hourlyWeather = await weatherService.fetchHourlyWeather(
-      query: query,
-      lat: lat,
-      lon: lon,
-    );
+    city = newCity;
+    await setLatLon();
     setBusy(false);
+    notifyListeners();
+  }
+
+  Future<void> setLatLon() async {
+    Map<String, dynamic> coordinates =
+        await weatherService.fetchCoordinates(city: city);
+    lat = coordinates['lat'];
+    lon = coordinates['lon'];
+    weather = await weatherService.fetchCurrentWeather(lat: lat, lon: lon,query: '');
+    hourlyWeather = await weatherService.fetchHourlyWeather(lat: lat, lon: lon, query: '');
     notifyListeners();
   }
 

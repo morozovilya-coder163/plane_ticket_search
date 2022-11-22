@@ -34,7 +34,7 @@ class WeatherView extends StatelessWidget {
             backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
             actions: [
               IconButton(
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.search, color: Colors.black,),
                 onPressed: () {
                   showSearch(
                     context: context,
@@ -54,21 +54,21 @@ class WeatherView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    model.weather.cityName,
+                    model.weather!.cityName,
                     style: const TextStyle(
                         fontSize: 32, fontWeight: FontWeight.bold),
                   ),
-                  Text(model.weather.description),
+                  Text(model.weather!.description),
                   const Spacer(),
                   WeatherCard(
                     title: "Now",
-                    temperature: model.weather.temperature,
-                    iconCode: model.weather.iconCode,
+                    temperature: model.weather!.temperature,
+                    iconCode: model.weather!.iconCode,
                     temperatureFontSize: 64,
                     iconScale: 1,
                   ),
                   const Spacer(),
-                  HourlyWeather(hourlyWeather: model.hourlyWeather)
+                  HourlyWeather(hourlyWeather: model.hourlyWeather!)
                 ],
               ),
             ),

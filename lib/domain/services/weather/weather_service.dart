@@ -9,32 +9,6 @@ class WeatherService with ReactiveServiceMixin {
 
   final WeatherRepository weatherRepository;
 
-  ReactiveList<Weather> hourlyWeatherForMyLocation = ReactiveList();
-  ReactiveValue<Weather?> currentWeatherForMyLocation = ReactiveValue(null);
-
-  Future<void> init({
-    queryCur,
-    queryHourly,
-    String latCur = '',
-    String lonCur = '',
-    String latHourly = '',
-    String lonHourly = '',
-  }) async {
-    currentWeatherForMyLocation.value =
-        await weatherRepository.fetchCurrentWeather(
-      query: queryCur,
-      lat: latCur,
-      lon: lonCur,
-    );
-    hourlyWeatherForMyLocation.addAll(
-      await weatherRepository.fetchHourlyWeather(
-        query: queryHourly,
-        lat: latHourly,
-        lon: lonHourly,
-      ),
-    );
-  }
-
   Future<Weather> fetchCurrentWeather({
     dynamic query,
     String? lat,
@@ -49,13 +23,17 @@ class WeatherService with ReactiveServiceMixin {
 
   Future<List<Weather>> fetchHourlyWeather({
     dynamic query,
-    String? lat,
-    String? lon,
+    required String lat,
+    required String lon,
   }) async {
     return await weatherRepository.fetchHourlyWeather(
       query: query,
       lat: lat,
       lon: lon,
     );
+  }
+
+  Future<Map<String, dynamic>> fetchCoordinates({required String city}) async {
+    return await weatherRepository.fetchCoordinates(city: city);
   }
 }
