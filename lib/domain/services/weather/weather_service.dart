@@ -36,9 +36,9 @@ class WeatherService with ReactiveServiceMixin {
   }
 
   Future<Weather> fetchCurrentWeather({
-    required dynamic query,
-    required String lat,
-    required String lon,
+    dynamic query,
+    String? lat,
+    String? lon,
   }) async {
     return await weatherRepository.fetchCurrentWeather(
       query: query,
@@ -48,9 +48,9 @@ class WeatherService with ReactiveServiceMixin {
   }
 
   Future<List<Weather>> fetchHourlyWeather({
-    required dynamic query,
-    required String lat,
-    required String lon,
+    dynamic query,
+    String? lat,
+    String? lon,
   }) async {
     return await weatherRepository.fetchHourlyWeather(
       query: query,
