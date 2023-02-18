@@ -34,7 +34,10 @@ class WeatherView extends StatelessWidget {
             backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
             actions: [
               IconButton(
-                icon: const Icon(Icons.search, color: Colors.black,),
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   showSearch(
                     context: context,

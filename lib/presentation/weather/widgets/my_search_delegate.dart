@@ -44,10 +44,16 @@ class MySearchDelegate extends SearchDelegate {
     close(context, query);
   }
 
-
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> searchResults = ["Helsinki", "Moscow", "Berlin", "New York", "Saint Petersburg", query].where((element) => element.contains(query)).toList();
+    List<String> searchResults = [
+      "Helsinki",
+      "Moscow",
+      "Berlin",
+      "New York",
+      "Saint Petersburg",
+      query
+    ].where((element) => element.contains(query)).toList();
 
     return ListView.builder(
       itemCount: searchResults.length,

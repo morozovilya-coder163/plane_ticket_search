@@ -18,6 +18,9 @@ class WeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageWeatherCard =
+        "http://openweathermap.org/img/wn/$iconCode@2x.png";
+
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -26,9 +29,7 @@ class WeatherCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(title),
-              Image.network(
-                  "http://openweathermap.org/img/wn/$iconCode@2x.png",
-                  scale: iconScale!),
+              Image.network(imageWeatherCard, scale: iconScale!),
               Text(
                 '$temperature°',
                 style: TextStyle(

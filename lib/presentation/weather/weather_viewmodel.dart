@@ -1,3 +1,4 @@
+import 'package:pet_projects/data/models/weather/coordinates.dart';
 import 'package:pet_projects/data/models/weather/weather.dart';
 import 'package:pet_projects/domain/services/weather/weather_service.dart';
 import 'package:stacked/stacked.dart';
@@ -21,7 +22,6 @@ class WeatherViewModel extends ReactiveViewModel {
     setBusy(true);
     await setLatLon();
     setBusy(false);
-    notifyListeners();
   }
 
   Future<void> onEntrySity(String newCity) async {
@@ -29,17 +29,22 @@ class WeatherViewModel extends ReactiveViewModel {
     city = newCity;
     await setLatLon();
     setBusy(false);
-    notifyListeners();
   }
 
   Future<void> setLatLon() async {
-    Map<String, dynamic> coordinates =
-        await weatherService.fetchCoordinates(city: city);
-    lat = coordinates['lat'];
-    lon = coordinates['lon'];
-    weather = await weatherService.fetchCurrentWeather(lat: lat, lon: lon,query: '');
-    hourlyWeather = await weatherService.fetchHourlyWeather(lat: lat, lon: lon, query: '');
-    notifyListeners();
+    Coordinates coordinates = await weatherService.fetchCoordinates(city: city);
+
+    lat = coordinates.lat;
+    lon = coordinates.lon;
+
+    weather = await weatherService.fetchCurrentWeather(
+      lat: lat,
+      lon: lon,
+    );
+    hourlyWeather = await weatherService.fetchHourlyWeather(
+      lat: lat,
+      lon: lon,
+    );
   }
 
   @override
